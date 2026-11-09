@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mapa de Empresas | De Crateús para o mundo</title>
+
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fafc;
+      --text: #0f172a;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --accent: #2563eb;
+      --accent-strong: #1d4ed8;
+      --accent-soft: #eff6ff;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(37, 99, 235, .10), transparent 32rem),
+        radial-gradient(circle at 88% 0%, rgba(14, 165, 233, .09), transparent 28rem),
+        var(--bg);
+    }
+
+    .page {
+      width: min(1440px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 48px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, .14);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -.04em;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .stat {
+      min-width: 116px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .8);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, .04);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 24px;
+      letter-spacing: -.03em;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .map-card,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .map-card {
+      padding: 14px;
+      overflow: hidden;
+    }
+
+    .map-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 4px 6px 14px;
+    }
+
+    .map-top strong {
+      font-size: 13px;
+      letter-spacing: -.01em;
+    }
+
+    .map-top span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    #map {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 15px;
+      background:
+        radial-gradient(circle at 50% 40%, rgba(219, 234, 254, .55), transparent 60%),
+        #fbfdff;
+    }
+
+    .map-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border: 1px solid #dbeafe;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #1e40af;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .map-hint::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #3b82f6;
+    }
+
+    .side {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .info-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .logo-badge {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      border-radius: 16px;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, .16);
+    }
+
+    .info-cat {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--accent-strong);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .info-head h2 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+    }
+
+    .info-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .info-desc {
+      margin: 0 0 18px;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .info-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .info-meta span {
+      padding: 6px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .vote-btn {
+      width: 100%;
+      padding: 14px 16px;
+      border: 0;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #fff;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(37, 99, 235, .28);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .vote-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(37, 99, 235, .34);
+    }
+
+    .vote-btn:disabled {
+      transform: none;
+      background: #e2e8f0;
+      color: #94a3b8;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .vote-count {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .vote-count strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .info-empty h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      letter-spacing: -.03em;
+    }
+
+    .info-empty p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .pin-illustration {
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 16px;
+      border-radius: 50% 50% 50% 8px;
+      background: linear-gradient(135deg, #60a5fa, #2563eb);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, .24);
+      transform: rotate(-45deg);
+    }
+
+    .pin-illustration::after {
+      content: "";
+      width: 14px;
+      height: 14px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      transform: rotate(45deg);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: 13px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-title span {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .locais {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 356px;
+      overflow: auto;
+      padding-right: 3px;
+    }
+
+    .local-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 11px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+    }
+
+    .local-item:hover {
+      border-color: var(--line);
+      background: var(--surface-2);
+    }
+
+    .local-item.active {
+      border-color: #bfdbfe;
+      background: var(--accent-soft);
+    }
+
+    .local-dot {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, .08);
+    }
+
+    .local-text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .local-text strong {
+      display: block;
+      overflow: hidden;
+      font-size: 13px;
+      line-height: 1.25;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .local-text small {
+      display: block;
+      overflow: hidden;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .local-votes {
+      flex-shrink: 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .legend i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .section-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reset-btn {
+      padding: 7px 10px;
+      border: 1px solid #fecaca;
+      border-radius: 999px;
+      background: #fff5f5;
+      color: #b91c1c;
+      font: inherit;
+      font-size: 10px;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease;
+    }
+
+    .reset-btn:hover {
+      border-color: #fca5a5;
+      background: #fee2e2;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .side { display: grid; grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .page { width: min(100% - 24px, 1440px); padding-top: 22px; }
+      .hero { align-items: flex-start; flex-direction: column; }
+      .stats { width: 100%; }
+      .stat { flex: 1; min-width: 0; }
+      .side { display: flex; }
+      .map-top { align-items: flex-start; flex-direction: column; gap: 8px; }
+    }
+  </style>
+
+  <script>
+    var LOCAIS = [
+      {
+        id: "crateus",
+        nome: "Crateús",
+        local: "Ponto de partida",
+        cidade: "Crateús, CE",
+        pais: "Brasil",
+        categoria: "Partida",
+        inicial: "C",
+        cor: "#0ea5e9",
+        corHover: "#0284c7",
+        lat: -5.1746,
+        lng: -40.6776,
+        tamanho: 30,
+        pulse: true,
+        descricao: "Ponto de partida da rota. Crateús fica no interior do Ceará, a cerca de 350 km de Fortaleza."
+      },
+      {
+        id: "microsoft",
+        nome: "Microsoft",
+        local: "Campus de Redmond",
+        cidade: "Redmond, WA",
+        pais: "Estados Unidos",
+        categoria: "Big Tech",
+        inicial: "M",
+        cor: "#0078d4",
+        corHover: "#005a9e",
+        lat: 47.6396,
+        lng: -122.1284,
+        descricao: "Sede da Microsoft em Redmond, Washington, onde fica o campus principal da empresa e boa parte de suas equipes."
+      },
+      {
+        id: "meta",
+        nome: "Meta",
+        local: "1 Hacker Way",
+        cidade: "Menlo Park, CA",
+        pais: "Estados Unidos",
+        categoria: "Big Tech",
+        inicial: "M",
+        cor: "#0866ff",
+        corHover: "#0654d4",
+        lat: 37.4848,
+        lng: -122.1484,
+        descricao: "Sede da Meta em Menlo Park, na 1 Hacker Way, onde ficam as operações de Facebook, Instagram e WhatsApp."
+      },
+      {
+        id: "spotify",
+        nome: "Spotify",
+        local: "Sede em Estocolmo",
+        cidade: "Estocolmo",
+        pais: "Suécia",
+        categoria: "Streaming",
+        inicial: "S",
+        cor: "#1db954",
+        corHover: "#169c46",
+        lat: 59.3326,
+        lng: 18.0650,
+        descricao: "Sede da Spotify em Estocolmo, Suécia, cidade onde o serviço de streaming musical foi criado em 2006."
+      },
+      {
+        id: "ubisoft",
+        nome: "Ubisoft",
+        local: "Sede em Paris",
+        cidade: "Paris",
+        pais: "França",
+        categoria: "Games",
+        inicial: "U",
+        cor: "#1b1b1b",
+        corHover: "#3a3a3a",
+        lat: 48.8566,
+        lng: 2.3522,
+        descricao: "Sede da Ubisoft em Paris, França, uma das maiores publicadoras e desenvolvedoras de jogos do mundo."
+      },
+      {
+        id: "nubank",
+        nome: "Nubank",
+        local: "Faria Lima",
+        cidade: "São Paulo, SP",
+        pais: "Brasil",
+        categoria: "Fintech",
+        inicial: "N",
+        cor: "#820ad1",
+        corHover: "#6b08ae",
+        lat: -23.5676,
+        lng: -46.6925,
+        descricao: "Sede do Nubank em São Paulo, na região da Faria Lima, um dos principais centros financeiros da cidade."
+      }
+    ];
+
+    var locations = {};
+    var labels = {};
+    var labelLayout = {
+      crateus: { anchor: "start", dx: 14, dy: 0 },
+      meta: { anchor: "start", dx: 14, dy: -18 },
+      microsoft: { anchor: "end", dx: -14, dy: -18 },
+      spotify: { anchor: "start", dx: 14, dy: 0 },
+      ubisoft: { anchor: "start", dx: 14, dy: 0 },
+      nubank: { anchor: "end", dx: -14, dy: -12 }
+    };
+    LOCAIS.forEach(function (item) {
+      var location = {
+        name: item.nome,
+        lat: String(item.lat),
+        lng: String(item.lng),
+        color: item.cor,
+        hover_color: item.corHover || item.cor,
+        description: item.descricao,
+        size: item.tamanho || 26,
+        type: "marker",
+        border_color: "#ffffff",
+        border: 2,
+        hover_border: 3,
+        pulse: item.pulse ? "yes" : "no"
+      };
+      if (item.pulse) {
+        location.pulse_color = item.cor;
+        location.pulse_size = 1.7;
+        location.pulse_speed = 1.2;
+      }
+      locations[item.id] = location;
+
+      var layout = labelLayout[item.id] || { anchor: "start", dx: 14, dy: 0 };
+      labels[item.id] = {
+        name: "\u00A0" + item.nome,
+        parent_type: "location",
+        parent_id: item.id,
+        color: "#0f172a",
+        hover_color: item.corHover || item.cor,
+        size: 14,
+        anchor: layout.anchor,
+        line: true,
+        line_color: "#94a3b8",
+        line_size: 1
+      };
+    });
+
+    var simplemaps_worldmap_mapdata = {
+      main_settings: {
+        width: "responsive",
+        background_color: "#ffffff",
+        background_transparent: "yes",
+        popups: "off",
+
+        state_description: "",
+        state_color: "#e8eef7",
+        state_hover_color: "#d6e1ef",
+        state_url: "",
+        border_size: 1,
+        border_color: "#ffffff",
+        all_states_inactive: "no",
+        all_states_zoomable: "no",
+
+        location_description: "",
+        location_color: "#2563eb",
+        location_opacity: 1,
+        location_hover_opacity: 1,
+        location_url: "",
+        location_size: 26,
+        location_type: "marker",
+        location_border_color: "#ffffff",
+        location_border: 2,
+        location_hover_border: 3,
+        all_locations_inactive: "no",
+        all_locations_hidden: "no",
+
+        label_color: "#0f172a",
+        label_hover_color: "#2563eb",
+        label_size: 14,
+        label_font: "Inter, Arial, sans-serif",
+        label_anchor: "start",
+        label_scale: "yes",
+        hide_labels: "no",
+
+        manual_zoom: "yes",
+        back_image: "no",
+        arrow_box: "no",
+        navigation_size: "38",
+        navigation_color: "#ffffff",
+        navigation_border_color: "#cbd5e1",
+        initial_back: "no",
+        initial_zoom: -1,
+        initial_zoom_solo: "no",
+        region_opacity: 1,
+        region_hover_opacity: 0.6,
+        zoom_out_incrementally: "yes",
+        zoom_percentage: 0.99,
+        zoom_time: 0.4,
+
+        popup_color: "white",
+        popup_opacity: 0.9,
+        popup_shadow: 1,
+        popup_corners: 5,
+        popup_font: "12px/1.5 Verdana, Arial, Helvetica, sans-serif",
+        popup_nocss: "no",
+
+        div: "map",
+        auto_load: "no",
+        rotate: "0",
+        url_new_tab: "yes",
+        images_directory: "default",
+        import_labels: "no",
+        fade_time: 0.1,
+        link_text: "Ver site"
+      },
+      state_specific: {
+        US: { name: "Estados Unidos", color: "#dfe9f7", hover_color: "#c9d9ee" },
+        BR: { name: "Brasil", color: "#ddefe7", hover_color: "#c7e6d5" },
+        FR: { name: "França", color: "#e8e2f6", hover_color: "#d8cfee" },
+        SE: { name: "Suécia", color: "#e8e2f6", hover_color: "#d8cfee" }
+      },
+      locations: locations,
+      labels: labels
+    };
+  </script>
+
+  <script src="worldmap.js"></script>
+</head>
+
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <span class="eyebrow">Mapa interativo</span>
+        <h1>De Crateús para o mundo</h1>
+        <p>Passe o mouse ou clique nos pinos para conhecer cada local. Escolha seu favorito e registre seu voto no painel ao lado.</p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <strong id="stat-locais">0</strong>
+          <span>locais</span>
+        </div>
+        <div class="stat">
+          <strong id="stat-votos">0</strong>
+          <span>votos</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="map-card">
+        <div class="map-top">
+          <strong>Pins das empresas e do ponto de partida</strong>
+          <span class="map-hint">Arraste para mover · role para aproximar</span>
+        </div>
+        <div id="map"></div>
+      </section>
+
+      <aside class="side">
+        <section class="panel" id="local-info">
+          <div class="info-empty">
+            <div class="pin-illustration" aria-hidden="true"></div>
+            <h2>Explore os locais</h2>
+            <p>Passe o mouse sobre um pino para ver as informações. Clique para selecionar o local e usar o botão de votar.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-title">
+            <h3>Locais da rota</h3>
+            <div class="section-actions">
+              <span id="contador-lista">0 locais</span>
+              <button class="reset-btn" type="button" id="btn-reset-votos">Resetar votos</button>
+            </div>
+          </div>
+          <div class="locais" id="lista-locais"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-title">
+            <h3>Categorias</h3>
+          </div>
+          <div class="legend">
+            <span><i style="background:#0866ff"></i>Big Tech</span>
+            <span><i style="background:#1db954"></i>Streaming</span>
+            <span><i style="background:#1b1b1b"></i>Games</span>
+            <span><i style="background:#820ad1"></i>Fintech</span>
+            <span><i style="background:#0ea5e9"></i>Partida</span>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      var CHAVE = "mapa-empresas-votos-v1";
+      var estado = carregarEstado();
+
+      function carregarEstado() {
+        try {
+          var salvo = JSON.parse(localStorage.getItem(CHAVE));
+          if (salvo && typeof salvo === "object") {
+            return {
+              votos: salvo.votos || {}
+            };
+          }
+        } catch (erro) {}
+        return { votos: {} };
+      }
+
+      function salvarEstado() {
+        try {
+          localStorage.setItem(CHAVE, JSON.stringify(estado));
+        } catch (erro) {}
+      }
+
+      function localPorId(id) {
+        for (var i = 0; i < LOCAIS.length; i++) {
+          if (LOCAIS[i].id === id) return LOCAIS[i];
+        }
+        return null;
+      }
+
+      function totalVotos() {
+        var total = 0;
+        for (var id in estado.votos) {
+          if (Object.prototype.hasOwnProperty.call(estado.votos, id)) {
+            total += Number(estado.votos[id]) || 0;
+          }
+        }
+        return total;
+      }
+
+      function formatarNumero(numero) {
+        return Number(numero || 0).toLocaleString("pt-BR");
+      }
+
+      function atualizarEstatisticas() {
+        document.getElementById("stat-locais").textContent = formatarNumero(LOCAIS.length);
+        document.getElementById("stat-votos").textContent = formatarNumero(totalVotos());
+      }
+
+      function atualizarLista() {
+        var lista = document.getElementById("lista-locais");
+        var html = "";
+        var ranking = LOCAIS.map(function (local, indice) {
+          return {
+            local: local,
+            indice: indice,
+            votos: Number(estado.votos[local.id]) || 0
+          };
+        }).sort(function (a, b) {
+          if (b.votos !== a.votos) return b.votos - a.votos;
+          return a.indice - b.indice;
+        });
+        ranking.forEach(function (item) {
+          var local = item.local;
+          var quantidade = item.votos;
+          html += '<button class="local-item" type="button" data-id="' + local.id + '">' +
+            '<span class="local-dot" style="background:' + local.cor + '"></span>' +
+            '<span class="local-text"><strong>' + local.nome + '</strong><small>' + local.cidade + ' · ' + local.pais + '</small></span>' +
+            '<span class="local-votes">' + quantidade + '</span>' +
+            '</button>';
+        });
+        lista.innerHTML = html;
+        document.getElementById("contador-lista").textContent = LOCAIS.length + " locais";
+        marcarAtivo(window.localSelecionado || null);
+      }
+
+      function marcarAtivo(id) {
+        var itens = document.querySelectorAll(".local-item");
+        for (var i = 0; i < itens.length; i++) {
+          itens[i].classList.toggle("active", itens[i].getAttribute("data-id") === id);
+        }
+      }
+
+      function renderizarInfo(local) {
+        var painel = document.getElementById("local-info");
+        var quantidade = Number(estado.votos[local.id]) || 0;
+        var corTexto = "#ffffff";
+
+        painel.innerHTML =
+          '<div class="info-head">' +
+            '<span class="logo-badge" style="background:' + local.cor + ';color:' + corTexto + '">' + local.inicial + '</span>' +
+            '<div>' +
+              '<span class="info-cat">' + local.categoria + '</span>' +
+              '<h2>' + local.nome + '</h2>' +
+              '<p>' + local.cidade + ' · ' + local.pais + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<p class="info-desc">' + local.descricao + '</p>' +
+          '<div class="info-meta">' +
+            '<span>' + local.local + '</span>' +
+            '<span>' + local.categoria + '</span>' +
+          '</div>' +
+          '<button class="vote-btn" type="button" id="btn-votar">' +
+            'Votar (+1)' +
+          '</button>' +
+          '<p class="vote-count"><strong>' + formatarNumero(quantidade) + '</strong> ' + (quantidade === 1 ? "voto" : "votos") + '</p>';
+
+        var botao = document.getElementById("btn-votar");
+        if (botao) {
+          botao.addEventListener("click", function () {
+            votar(local.id);
+          });
+        }
+      }
+
+      function selecionar(id, aproximar) {
+        var local = localPorId(id);
+        if (!local) return;
+        window.localSelecionado = id;
+        renderizarInfo(local);
+        marcarAtivo(id);
+
+        if (aproximar && window.simplemaps_worldmap && simplemaps_worldmap.loaded) {
+          simplemaps_worldmap.location_zoom(id, 4);
+        }
+      }
+
+      function votar(id) {
+        estado.votos[id] = (Number(estado.votos[id]) || 0) + 1;
+        salvarEstado();
+        atualizarEstatisticas();
+        atualizarLista();
+        var local = localPorId(id);
+        if (local) renderizarInfo(local);
+      }
+
+      document.getElementById("lista-locais").addEventListener("click", function (evento) {
+        var item = evento.target.closest(".local-item");
+        if (!item) return;
+        selecionar(item.getAttribute("data-id"), true);
+      });
+
+      document.getElementById("btn-reset-votos").addEventListener("click", function () {
+        localStorage.clear();
+        estado = { votos: {} };
+        atualizarEstatisticas();
+        atualizarLista();
+        var local = localPorId(window.localSelecionado);
+        if (local) renderizarInfo(local);
+      });
+
+      window.simplemaps_worldmap.hooks.over_location = function (id) {
+        selecionar(id, false);
+      };
+
+      window.simplemaps_worldmap.hooks.click_location = function (id) {
+        selecionar(id, true);
+      };
+
+      function posicionarLegendas() {
+        LOCAIS.forEach(function (item) {
+          var config = labelLayout[item.id] || { dx: 14, dy: 0 };
+          var local = simplemaps_worldmap_mapdata.locations[item.id];
+          var legenda = simplemaps_worldmap_mapdata.labels[item.id];
+          if (!local || !legenda) return;
+          var ponto = simplemaps_worldmap.proj(Number(local.lat), Number(local.lng));
+          if (!ponto || ponto.x == null || ponto.y == null) return;
+          legenda.x = ponto.x + config.dx;
+          legenda.y = ponto.y + config.dy;
+        });
+        simplemaps_worldmap.refresh();
+      }
+
+      atualizarEstatisticas();
+      atualizarLista();
+      simplemaps_worldmap.load();
+      setTimeout(posicionarLegendas, 0);
+    })();
+  </script>
+</body>
+</html>
