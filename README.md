@@ -32,18 +32,25 @@ Depois abra `http://localhost:8000` no navegador. Também é possível abrir `in
 
 ## Estrutura do projeto
 
-| Arquivo | Descrição |
-| --- | --- |
-| `index.html` | Aplicação completa (HTML, CSS e JS inline) |
-| `worldmap.js` | Biblioteca Simplemaps HTML5 World Map v4.53 (inclui Raphaël e Shifty) |
-| `mapdata.js` | Dados de exemplo da Simplemaps (214 países + 3 locais); usado apenas pelo `test.html`, não pelo `index.html` |
-| `test.html` | Página de demonstração da biblioteca do mapa |
-| `documentation.html` | Redireciona para a documentação oficial da Simplemaps |
-| `license.txt` | Termos da licença Simplemaps |
+```
+index.html            Marcação da página e referências aos recursos
+css/
+  styles.css          Estilos da aplicação
+js/
+  map-data.js         Locais iniciais, dados auxiliares e configuração do mapa (simplemaps_worldmap_mapdata)
+  app.js              Lógica da aplicação (votação, CRUD, ranking, geocodificação, modais)
+worldmap.js           Biblioteca Simplemaps HTML5 World Map v4.53 (inclui Raphaël e Shifty)
+mapdata.js            Dados de exemplo da Simplemaps (214 países + 3 locais); usados apenas pelo test.html, não pelo index.html
+test.html             Página de demonstração da biblioteca do mapa
+documentation.html    Redireciona para a documentação oficial da Simplemaps
+license.txt           Termos da licença Simplemaps
+```
+
+> **Ordem de carregamento:** `js/map-data.js` define o objeto `simplemaps_worldmap_mapdata`, lido pela biblioteca `worldmap.js` no momento em que ela carrega; por isso ele é incluído antes no `<head>`. Já o `js/app.js` depende do DOM e da biblioteca, e é incluído no fim do `<body>`.
 
 ## Dados e persistência
 
-Os locais iniciais vêm embutidos no `index.html`:
+Os locais iniciais vêm embutidos em `js/map-data.js`:
 
 1. **Crateús** — ponto de partida (Partida, Brasil, com pin pulsante)
 2. **Microsoft** — Big Tech, Redmond, EUA
@@ -71,4 +78,4 @@ Locais cadastrados, exclusões e votos sobrevivem ao recarregamento da página n
 ## Licença e créditos
 
 - O mapa é gerado pela biblioteca **Simplemaps HTML5 World Map v4.53** (`worldmap.js`), licenciada nos termos da [Simplemaps](https://simplemaps.com/license) — versão *branded*, destinada a uso acadêmico, sem fins lucrativos ou pessoal, mantendo a atribuição à Simplemaps. Os termos completos estão em `license.txt`.
-- O restante do código da aplicação está contido em `index.html`, sem declaração de licença específica.
+- O restante do código da aplicação (`index.html`, `css/styles.css`, `js/map-data.js` e `js/app.js`) não possui declaração de licença específica.
