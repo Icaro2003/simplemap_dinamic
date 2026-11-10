@@ -10,7 +10,7 @@ Mapa mundial interativo em HTML5 para explorar empresas e locais ao redor do pla
 - **Painel lateral** — ao passar o mouse ou clicar em um pin, exibe categoria, cidade/país, descrição e ações do local
 - **Votação** — botão "Votar (+1)" incrementa o contador do local selecionado (votos ilimitados, sem autenticação)
 - **Ranking dinâmico** — lista "Locais da rota" ordenada por número de votos (decrescente), com desempate pela ordem de inserção; o ponto de partida só ocupa o topo se tiver votos iguais ou superiores; badge "Partida" identifica a origem da rota
-- **Cadastro de local** — modal com nome, país (seletor pesquisável com nomes em português via `Intl.DisplayNames`), cidade, categoria, endereço/referência, descrição e latitude/longitude opcionais
+- **Cadastro de local** — modal com nome, país (seletor pesquisável com nomes em português via `Intl.DisplayNames`), cidade (combobox digitável com sugestões via OpenStreetMap, bloqueado até a seleção do país), categoria, endereço/referência, descrição e latitude/longitude opcionais
 - **Geocodificação automática** — ao cadastrar sem coordenadas manuais, a cidade é buscada via Nominatim/OpenStreetMap (com cache em memória e timeout); em caso de falha, o pin é posicionado no centro do país com deslocamento
 - **Exclusão de local** — confirmação via modal; a exclusão de locais embutidos e adicionados persiste entre recarregamentos
 - **Resetar votos** — limpa todos os votos armazenados
@@ -28,7 +28,7 @@ python3 -m http.server
 
 Depois abra `http://localhost:8000` no navegador. Também é possível abrir `index.html` diretamente, mas um servidor local é recomendado.
 
-> **Nota:** o mapa funciona offline. A conexão com a internet só é necessária ao cadastrar um local **sem** latitude/longitude manual, para a geocodificação via OpenStreetMap.
+> **Nota:** o mapa funciona offline. A conexão com a internet só é necessária ao cadastrar um local — para as sugestões de cidades enquanto você digita e para a geocodificação via OpenStreetMap quando latitude/longitude não são informadas manualmente.
 
 ## Estrutura do projeto
 
