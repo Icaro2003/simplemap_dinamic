@@ -289,6 +289,7 @@
         }
 
         select.innerHTML = html;
+        select.size = Math.min(Math.max(select.options.length, 2), 6);
 
         if (!busca) {
           select.value = "";
@@ -361,12 +362,14 @@
         var select = document.getElementById("select-cidade");
         var html = "";
         for (var i = 0; i < sugestoes.length; i++) {
-          html += '<option value="' + escaparHTML(sugestoes[i].nome) + '">' + escaparHTML(sugestoes[i].nome) + '</option>';
+          var rotulo = sugestoes[i].nome + (sugestoes[i].estado ? " (" + sugestoes[i].estado + ")" : "");
+          html += '<option value="' + escaparHTML(sugestoes[i].nome) + '">' + escaparHTML(rotulo) + '</option>';
         }
         if (!html) {
           html = '<option value="" disabled selected>Nenhuma cidade encontrada</option>';
         }
         select.innerHTML = html;
+        select.size = Math.min(Math.max(sugestoes.length, 2), 6);
         definirListaCidadesVisivel(true);
       }
 
@@ -408,7 +411,7 @@
               if (!nome || vistos[nome]) return;
               if (normalizarBusca(nome).indexOf(alvo) !== 0) return;
               vistos[nome] = true;
-              sugestoes.push({ nome: nome });
+              sugestoes.push({ nome: nome, estado: String(prop.state || "") || null });
             });
             cacheCidades[chave] = sugestoes;
             if (token === sequenciaCidade) renderizarSugestoesCidade(sugestoes);
