@@ -317,6 +317,7 @@
       var sequenciaCidade = 0;
       var requisicaoCidadeAtiva = null;
       var ultimoPaisCidade = null;
+      var TIPOS_CIDADE = { city: true, municipality: true, town: true, village: true };
 
       function paisConfirmado() {
         var select = document.getElementById("select-pais");
@@ -396,6 +397,8 @@
             var sugestoes = [];
             var vistos = {};
             (lista || []).forEach(function (item) {
+              var tipo = item && item.addresstype;
+              if (!tipo || !TIPOS_CIDADE[tipo]) return;
               var nome = (item && item.name) ? String(item.name) : String((item && item.display_name) || "").split(",")[0].trim();
               if (!nome || vistos[nome]) return;
               vistos[nome] = true;
