@@ -274,13 +274,11 @@
       font-size: 14px;
       font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 12px 26px rgba(37, 99, 235, .28);
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      transition: transform .18s ease, background .18s ease;
     }
 
     .vote-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 16px 30px rgba(37, 99, 235, .34);
     }
 
     .vote-btn:disabled {
@@ -288,7 +286,6 @@
       background: #e2e8f0;
       color: #94a3b8;
       cursor: default;
-      box-shadow: none;
     }
 
     .vote-count {
@@ -556,13 +553,12 @@
       font-weight: 800;
       white-space: nowrap;
       cursor: pointer;
-      box-shadow: 0 8px 18px rgba(37, 99, 235, .24);
       transition: transform .18s ease, box-shadow .18s ease;
     }
 
     .add-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 12px 22px rgba(37, 99, 235, .32);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, .3);
     }
 
     .info-actions {
@@ -1465,9 +1461,6 @@
             votos: Number(estado.votos[local.id]) || 0
           };
         }).sort(function (a, b) {
-          var inicioA = ehPontoDePartida(a.local) ? 0 : 1;
-          var inicioB = ehPontoDePartida(b.local) ? 0 : 1;
-          if (inicioA !== inicioB) return inicioA - inicioB;
           if (b.votos !== a.votos) return b.votos - a.votos;
           return a.indice - b.indice;
         });
