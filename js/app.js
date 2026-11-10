@@ -308,7 +308,115 @@
         if (!pais) return;
         busca.value = pais.nome;
         definirListaPaisesVisivel(false);
+        atualizarEstadoCampoCidade();
         busca.focus();
+      }
+
+      var cacheCidades = {};
+      var timerBuscaCidade = null;
+      var sequenciaCidade = 0;
+      var requisicaoCidadeAtiva = null;
+      var ultimoPaisCidade = null;
+
+      function paisConfirmado() {
+        var select = document.getElementById("select-pais");
+        var busca = document.getElementById("busca-pais");
+        var pais = PAISES_POR_ISO[select.value];
+        return (pais && busca.value === pais.nome) ? pais : null;
+      }
+
+      function definirListaCidadesVisivel(visivel) {
+        var select = document.getElementById("select-cidade");
+        var campo = document.getElementById("busca-cidade");
+        select.hidden = !visivel;
+        campo.setAttribute("aria-expanded", visivel ? "true" : "false");
+      }
+
+      function atualizarEstadoCampoCidade() {
+        var campo = document.getElementById("busca-cidade");
+        var select = document.getElementById("select-cidade");
+        var pais = paisConfirmado();
+        if (pais && pais.iso === ultimoPaisCidade) return;
+        ultimoPaisCidade = pais ? pais.iso : null;
+        clearTimeout(timerBuscaCidade);
+        sequenciaCidade++;
+        if (requisicaoCidadeAtiva) {
+          requisicaoCidadeAtiva.abort();
+          requisicaoCidadeAtiva = null;
+        }
+        campo.value = "";
+        select.innerHTML = "";
+        definirListaCidadesVisivel(false);
+        if (pais) {
+          campo.disabled = false;
+          campo.placeholder = "Digite para buscar a cidade...";
+        } else {
+          campo.disabled = true;
+          campo.placeholder = "Selecione o país primeiro";
+        }
+      }
+
+      function renderizarSugestoesCidade(sugestoes) {
+        var select = document.getElementById("select-cidade");
+        var html = "";
+        for (var i = 0; i < sugestoes.length; i++) {
+          html += '<option value="' + escaparHTML(sugestoes[i].nome) + '">' + escaparHTML(sugestoes[i].nome) + '</option>';
+        }
+        if (!html) {
+          html = '<option value="" disabled selected>Nenhuma cidade encontrada</option>';
+        }
+        select.innerHTML = html;
+        definirListaCidadesVisivel(true);
+      }
+
+      function sugerirCidades(texto) {
+        var pais = paisConfirmado();
+        if (!pais) return;
+        var chave = pais.iso + "|" + normalizarBusca(texto);
+        var token = ++sequenciaCidade;
+        if (cacheCidades[chave]) {
+          renderizarSugestoesCidade(cacheCidades[chave]);
+          return;
+        }
+        if (typeof fetch !== "function" || typeof AbortController === "undefined") return;
+        if (requisicaoCidadeAtiva) requisicaoCidadeAtiva.abort();
+        var controller = new AbortController();
+        requisicaoCidadeAtiva = controller;
+        var timer = setTimeout(function () {
+          controller.abort();
+        }, 8000);
+        var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=pt-BR&countrycodes=" +
+          encodeURIComponent(pais.iso.toLowerCase()) + "&q=" + encodeURIComponent(texto);
+        fetch(url, { signal: controller.signal, headers: { "Accept": "application/json" } })
+          .then(function (resposta) {
+            if (!resposta.ok) throw new Error("cidades");
+            return resposta.json();
+          })
+          .then(function (lista) {
+            var sugestoes = [];
+            var vistos = {};
+            (lista || []).forEach(function (item) {
+              var nome = (item && item.name) ? String(item.name) : String((item && item.display_name) || "").split(",")[0].trim();
+              if (!nome || vistos[nome]) return;
+              vistos[nome] = true;
+              sugestoes.push({ nome: nome });
+            });
+            cacheCidades[chave] = sugestoes;
+            if (token === sequenciaCidade) renderizarSugestoesCidade(sugestoes);
+          })
+          .catch(function () {})
+          .then(function () {
+            clearTimeout(timer);
+          });
+      }
+
+      function aplicarSugestaoCidade() {
+        var select = document.getElementById("select-cidade");
+        var campo = document.getElementById("busca-cidade");
+        if (!select.value) return;
+        campo.value = select.value;
+        definirListaCidadesVisivel(false);
+        campo.focus();
       }
 
       function abrirCadastro() {
@@ -316,13 +424,8 @@
         form.reset();
         document.getElementById("busca-pais").value = "";
         renderizarOpcoesPais("");
-        var select = document.getElementById("select-pais");
-        var padrao = PAISES_POR_ISO["BR"];
-        if (padrao) {
-          select.value = "BR";
-          document.getElementById("busca-pais").value = padrao.nome;
-        }
         definirListaPaisesVisivel(false);
+        atualizarEstadoCampoCidade();
         mostrarStatus("", false);
         abrirOverlay("modal-cadastro");
         setTimeout(function () {
@@ -502,6 +605,11 @@
           return;
         }
         if (!cidade) {
+          if (form.elements.cidade.disabled) {
+            mostrarStatus("Selecione um país na lista.", true);
+            document.getElementById("busca-pais").focus();
+            return;
+          }
           mostrarStatus("Informe a cidade.", true);
           form.elements.cidade.focus();
           return;
@@ -616,6 +724,7 @@
           var pais = PAISES_POR_ISO[select.value];
           if (pais && this.value !== pais.nome) select.value = "";
           renderizarOpcoesPais(this.value);
+          atualizarEstadoCampoCidade();
         });
 
         busca.addEventListener("keydown", function (evento) {
@@ -634,6 +743,7 @@
         select.addEventListener("change", function () {
           var pais = PAISES_POR_ISO[this.value];
           if (pais) busca.value = pais.nome;
+          atualizarEstadoCampoCidade();
         });
 
         select.addEventListener("click", function () {
@@ -648,6 +758,54 @@
             evento.preventDefault();
             definirListaPaisesVisivel(false);
             busca.focus();
+          }
+        });
+      })();
+      (function configurarSeletorCidade() {
+        var campo = document.getElementById("busca-cidade");
+        var select = document.getElementById("select-cidade");
+
+        campo.addEventListener("input", function () {
+          clearTimeout(timerBuscaCidade);
+          var texto = this.value.trim();
+          if (texto.length < 2 || !paisConfirmado()) {
+            definirListaCidadesVisivel(false);
+            return;
+          }
+          timerBuscaCidade = setTimeout(function () {
+            sugerirCidades(texto);
+          }, 400);
+        });
+
+        campo.addEventListener("keydown", function (evento) {
+          if (evento.key === "ArrowDown" && !select.hidden) {
+            evento.preventDefault();
+            select.focus();
+            if (select.selectedIndex < 0) select.selectedIndex = 0;
+            return;
+          }
+          if (evento.key === "Enter" && !select.hidden) {
+            evento.preventDefault();
+            aplicarSugestaoCidade();
+          }
+        });
+
+        select.addEventListener("change", function () {
+          if (this.value) campo.value = this.value;
+        });
+
+        select.addEventListener("click", function () {
+          aplicarSugestaoCidade();
+        });
+
+        select.addEventListener("keydown", function (evento) {
+          if (evento.key === "Enter") {
+            evento.preventDefault();
+            aplicarSugestaoCidade();
+          } else if (evento.key === "Escape") {
+            evento.preventDefault();
+            definirListaCidadesVisivel(false);
+            campo.focus();
           }
         });
       })();

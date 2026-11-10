@@ -676,10 +676,19 @@
 
     .field textarea { resize: vertical; min-height: 74px; }
 
-    #select-pais { margin-top: 2px; padding: 6px; }
-    #select-pais[hidden] { display: none; }
-    #select-pais option { padding: 5px 7px; }
-    #select-pais option:disabled { color: var(--muted); }
+    #select-pais,
+    #select-cidade { margin-top: 2px; padding: 6px; }
+    #select-pais[hidden],
+    #select-cidade[hidden] { display: none; }
+    #select-pais option,
+    #select-cidade option { padding: 5px 7px; }
+    #select-pais option:disabled,
+    #select-cidade option:disabled { color: var(--muted); }
+    #busca-cidade:disabled {
+      background: var(--surface-2);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
 
     .advanced {
       padding: 10px 12px;

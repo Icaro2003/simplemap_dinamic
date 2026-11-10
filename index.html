@@ -102,10 +102,11 @@
           <select name="paisISO" id="select-pais" size="6" aria-label="Lista de países" hidden></select>
         </div>
 
-        <label class="field">
+        <div class="field">
           <span>Cidade *</span>
-          <input name="cidade" type="text" maxlength="80" required autocomplete="off" placeholder="Ex.: Paris">
-        </label>
+          <input id="busca-cidade" name="cidade" type="search" maxlength="80" required autocomplete="off" placeholder="Selecione o país primeiro" aria-label="Buscar cidade" role="combobox" aria-controls="select-cidade" aria-expanded="false" aria-autocomplete="list" disabled>
+          <select id="select-cidade" size="6" aria-label="Lista de cidades" hidden></select>
+        </div>
 
         <label class="field">
           <span>Categoria *</span>
