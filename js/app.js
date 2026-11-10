@@ -386,21 +386,27 @@
         var timer = setTimeout(function () {
           controller.abort();
         }, 8000);
-        var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&accept-language=pt-BR&countrycodes=" +
-          encodeURIComponent(pais.iso.toLowerCase()) + "&q=" + encodeURIComponent(texto);
+        var url = "https://photon.komoot.io/api/?q=" + encodeURIComponent(texto) + "&limit=40";
         fetch(url, { signal: controller.signal, headers: { "Accept": "application/json" } })
           .then(function (resposta) {
             if (!resposta.ok) throw new Error("cidades");
             return resposta.json();
           })
-          .then(function (lista) {
+          .then(function (dados) {
             var sugestoes = [];
             var vistos = {};
-            (lista || []).forEach(function (item) {
-              var tipo = item && item.addresstype;
-              if (!tipo || !TIPOS_CIDADE[tipo]) return;
-              var nome = (item && item.name) ? String(item.name) : String((item && item.display_name) || "").split(",")[0].trim();
+            var alvo = normalizarBusca(texto);
+            var isoPais = pais.iso.toUpperCase();
+            var recursos = (dados && dados.features) || [];
+            recursos.forEach(function (recurso) {
+              var prop = recurso && recurso.properties;
+              if (!prop) return;
+              if (prop.countrycode !== isoPais) return;
+              if (prop.osm_key !== "place") return;
+              if (!prop.osm_value || !TIPOS_CIDADE[prop.osm_value]) return;
+              var nome = String(prop.name || "");
               if (!nome || vistos[nome]) return;
+              if (normalizarBusca(nome).indexOf(alvo) !== 0) return;
               vistos[nome] = true;
               sugestoes.push({ nome: nome });
             });
