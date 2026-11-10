@@ -190,6 +190,11 @@
       padding: 22px;
     }
 
+    .panel.is-start {
+      border-color: #bae6fd;
+      box-shadow: 0 18px 45px rgba(14, 165, 233, .14);
+    }
+
     .info-head {
       display: flex;
       align-items: center;
@@ -432,6 +437,53 @@
       font-weight: 800;
     }
 
+    .local-item.start {
+      border-color: #e0f2fe;
+      background: #f8fdff;
+    }
+
+    .local-item.start:hover {
+      border-color: #bae6fd;
+      background: #f0f9ff;
+    }
+
+    .local-item.start.active {
+      border-color: #7dd3fc;
+      background: #e0f2fe;
+    }
+
+    .local-badge {
+      flex-shrink: 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .info-meta .start-chip {
+      border-color: #bae6fd;
+      background: #f0f9ff;
+      color: #0369a1;
+      font-weight: 800;
+    }
+
+    .lock-note {
+      margin: 0;
+      padding: 11px 14px;
+      border: 1px dashed #bae6fd;
+      border-radius: 13px;
+      background: #f0f9ff;
+      color: #0369a1;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+    }
+
     .legend {
       display: flex;
       flex-wrap: wrap;
@@ -482,6 +534,272 @@
       background: #fee2e2;
     }
 
+    .map-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 13px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #fff;
+      font: inherit;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, .24);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .add-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 22px rgba(37, 99, 235, .32);
+    }
+
+    .info-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .delete-btn {
+      width: 100%;
+      padding: 11px 16px;
+      border: 1px solid #fecaca;
+      border-radius: 13px;
+      background: #fff5f5;
+      color: #b91c1c;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .18s ease, border-color .18s ease;
+    }
+
+    .delete-btn:hover {
+      border-color: #fca5a5;
+      background: #fee2e2;
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(15, 23, 42, .55);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal-overlay[hidden] { display: none; }
+
+    .modal {
+      width: min(560px, 100%);
+      max-height: min(90vh, 760px);
+      overflow: auto;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: 0 30px 80px rgba(15, 23, 42, .35);
+    }
+
+    .modal-small { width: min(420px, 100%); }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .modal-head h2 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: -.03em;
+    }
+
+    .modal-close {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      background: var(--accent-soft);
+      color: var(--accent-strong);
+    }
+
+    .modal-form { display: flex; flex-direction: column; gap: 12px; }
+
+    .field { display: flex; flex-direction: column; gap: 5px; }
+
+    .field > span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: #fff;
+      color: var(--text);
+      font: inherit;
+      font-size: 13px;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: 2px solid rgba(37, 99, 235, .35);
+      outline-offset: 1px;
+      border-color: #93c5fd;
+    }
+
+    .field textarea { resize: vertical; min-height: 74px; }
+
+    #select-pais { margin-top: 2px; padding: 6px; }
+    #select-pais[hidden] { display: none; }
+    #select-pais option { padding: 5px 7px; }
+    #select-pais option:disabled { color: var(--muted); }
+
+    .advanced {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: var(--surface-2);
+    }
+
+    .advanced summary {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .advanced-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .form-status {
+      min-height: 16px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .form-status.error { color: #b91c1c; font-weight: 700; }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 9px;
+      margin-top: 4px;
+    }
+
+    .btn-primary,
+    .btn-ghost,
+    .btn-danger {
+      padding: 11px 16px;
+      border-radius: 11px;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      border: 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, .24);
+    }
+
+    .btn-primary:disabled {
+      background: #cbd5e1;
+      box-shadow: none;
+      cursor: default;
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover { background: var(--surface-2); }
+
+    .btn-danger {
+      border: 1px solid #fecaca;
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .btn-danger:hover { background: #b91c1c; }
+
+    .confirm-text {
+      margin: 0 0 16px;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 60;
+      max-width: min(92vw, 420px);
+      padding: 11px 16px;
+      border-radius: 12px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(10px);
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     @media (max-width: 980px) {
       .layout { grid-template-columns: 1fr; }
       .side { display: grid; grid-template-columns: 1fr 1fr; }
@@ -494,6 +812,8 @@
       .stat { flex: 1; min-width: 0; }
       .side { display: flex; }
       .map-top { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .map-actions { justify-content: flex-start; }
+      .advanced-grid { grid-template-columns: 1fr; }
     }
   </style>
 
@@ -505,6 +825,7 @@
         local: "Ponto de partida",
         cidade: "Crateús, CE",
         pais: "Brasil",
+        paisISO: "BR",
         categoria: "Partida",
         inicial: "C",
         cor: "#0ea5e9",
@@ -513,6 +834,7 @@
         lng: -40.6776,
         tamanho: 30,
         pulse: true,
+        pontoDePartida: true,
         descricao: "Ponto de partida da rota. Crateús fica no interior do Ceará, a cerca de 350 km de Fortaleza."
       },
       {
@@ -521,6 +843,7 @@
         local: "Campus de Redmond",
         cidade: "Redmond, WA",
         pais: "Estados Unidos",
+        paisISO: "US",
         categoria: "Big Tech",
         inicial: "M",
         cor: "#0078d4",
@@ -535,6 +858,7 @@
         local: "1 Hacker Way",
         cidade: "Menlo Park, CA",
         pais: "Estados Unidos",
+        paisISO: "US",
         categoria: "Big Tech",
         inicial: "M",
         cor: "#0866ff",
@@ -549,6 +873,7 @@
         local: "Sede em Estocolmo",
         cidade: "Estocolmo",
         pais: "Suécia",
+        paisISO: "SE",
         categoria: "Streaming",
         inicial: "S",
         cor: "#1db954",
@@ -563,6 +888,7 @@
         local: "Sede em Paris",
         cidade: "Paris",
         pais: "França",
+        paisISO: "FR",
         categoria: "Games",
         inicial: "U",
         cor: "#1b1b1b",
@@ -577,6 +903,7 @@
         local: "Faria Lima",
         cidade: "São Paulo, SP",
         pais: "Brasil",
+        paisISO: "BR",
         categoria: "Fintech",
         inicial: "N",
         cor: "#820ad1",
@@ -586,6 +913,139 @@
         descricao: "Sede do Nubank em São Paulo, na região da Faria Lima, um dos principais centros financeiros da cidade."
       }
     ];
+
+    var CHAVE_LOCAIS = "mapa-empresas-locais-v1";
+    var PAISES_DESTACADOS = ["BR", "US", "FR", "SE"];
+
+    var SIGLAS_PAIS = {
+      AF: "AFG", AO: "ANG", AL: "ALB", AE: "EAU", AR: "ARG", AM: "ARM", AU: "AUS", AT: "AUT",
+      AZ: "AZE", BI: "BDI", BE: "BEL", BJ: "BEN", BF: "BFA", BD: "BAN", BG: "BUL", BH: "BHR",
+      BA: "BIH", BY: "BLR", BZ: "BLZ", BO: "BOL", BR: "BRA", BN: "BRU", BT: "BHU", BW: "BOT",
+      CF: "RCA", CA: "CAN", CH: "SUI", CL: "CHI", CN: "CHN", CI: "CIV", CM: "CMR", CD: "RDC",
+      CG: "CGO", CO: "COL", CR: "CRC", CU: "CUB", CZ: "CZE", DE: "ALE", DJ: "DJI", DK: "DIN",
+      DO: "DOM", DZ: "ALG", EC: "EQU", EG: "EGY", ER: "ERI", EE: "EST", ET: "ETI", FI: "FIN",
+      FJ: "FIJ", GA: "GAB", GB: "GBR", GE: "GEO", GH: "GHA", GN: "GUI", GM: "GAM", GW: "GNB",
+      GQ: "GEQ", GR: "GRE", GL: "GRO", GT: "GUA", GY: "GUY", HN: "HON", HR: "CRO", HT: "HAI",
+      HU: "HUN", ID: "INA", IN: "IND", IE: "IRL", IR: "IRI", IQ: "IRQ", IS: "ISL", IL: "ISR",
+      IT: "ITA", JM: "JAM", JO: "JOR", JP: "JAP", KZ: "CAZ", KE: "KEN", KG: "KGZ", KH: "CAM",
+      KR: "KOR", XK: "KOS", KW: "KUW", LA: "LAO", LB: "LIB", LR: "LBR", LY: "LBA", LK: "SRI",
+      LS: "LES", LT: "LTU", LU: "LUX", LV: "LET", MA: "MAR", MD: "MDA", MG: "MAD", MX: "MEX",
+      MK: "MKD", ML: "MLI", MM: "MYA", ME: "MNE", MN: "MGL", MZ: "MOZ", MR: "MTN", MW: "MWI",
+      MY: "MAS", NA: "NAM", NE: "NIG", NG: "NGA", NI: "NIC", NL: "HOL", NO: "NOR", NP: "NEP",
+      NZ: "NZL", OM: "OMA", PK: "PAQ", PA: "PAN", PE: "PER", PH: "FIL", PG: "PNG", PL: "POL",
+      KP: "PRK", PT: "POR", PY: "PAR", PS: "PLE", QA: "QAT", RO: "ROM", RU: "RUS", RW: "RWA",
+      EH: "SAH", SA: "KSA", SD: "SUD", SS: "SSD", SN: "SEN", SL: "SLE", SV: "ESA", RS: "SRB",
+      SR: "SUR", SK: "SVK", SI: "SLO", SE: "SUE", SZ: "SWZ", SY: "SYR", TD: "CHA", TG: "TOG",
+      TH: "THA", TJ: "TJK", TM: "TKM", TL: "TLS", TN: "TUN", TR: "TUR", TW: "TWN", TZ: "TAN",
+      UG: "UGA", UA: "UKR", UY: "URU", US: "EUA", UZ: "UZB", VE: "VEN", VN: "VIE", VU: "VAN",
+      YE: "YEM", ZA: "RSA", ZM: "ZAM", ZW: "ZIM", SO: "SOM", GF: "GUF", FR: "FRA", ES: "ESP",
+      AW: "ARU", AI: "AIA", AD: "AND", AG: "ATG", BS: "BAH", BM: "BER", BB: "BAR", KM: "COM",
+      CV: "CPV", KY: "CAY", DM: "DMA", FK: "FLK", FO: "FRO", GD: "GRN", HK: "HKG", KN: "SKN",
+      LC: "LCA", LI: "LIE", MF: "MAF", MV: "MDV", MT: "MLT", MS: "MSR", MU: "MRI", NC: "NCL",
+      NR: "NRU", PN: "PCN", PR: "PUR", PF: "PYF", SG: "SGP", SB: "SOL", ST: "STP", SX: "SXM",
+      SC: "SEY", TC: "TCA", TO: "TGA", TT: "TRI", VC: "VIN", VG: "VGB", VI: "VIR", CY: "CYP",
+      RE: "REU", YT: "MYT", MQ: "MTQ", GP: "GLP", CW: "CUW", IC: "ICA"
+    };
+
+    var nomesPaisIntl = null;
+
+    function nomePais(iso) {
+      iso = String(iso || "").toUpperCase();
+      try {
+        if (!nomesPaisIntl && typeof Intl !== "undefined" && Intl.DisplayNames) {
+          nomesPaisIntl = new Intl.DisplayNames(["pt-BR"], { type: "region" });
+        }
+        if (nomesPaisIntl) {
+          var nome = nomesPaisIntl.of(iso);
+          if (nome && nome !== iso) return nome;
+        }
+      } catch (erro) {}
+      return iso;
+    }
+
+    function textoLimpo(valor, maximo) {
+      return String(valor == null ? "" : valor).replace(/\s+/g, " ").trim().slice(0, maximo);
+    }
+
+    function normalizarLocalSalvo(item) {
+      if (!item || typeof item !== "object") return null;
+      var id = textoLimpo(item.id, 80);
+      var nome = textoLimpo(item.nome, 60);
+      var cidade = textoLimpo(item.cidade, 80);
+      var iso = textoLimpo(item.paisISO, 2).toUpperCase();
+      if (!id || !nome || !cidade || !/^[A-Z]{2}$/.test(iso)) return null;
+      var lat = Number(item.lat);
+      var lng = Number(item.lng);
+      if (!isFinite(lat) || !isFinite(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) return null;
+      var categoria = textoLimpo(item.categoria, 40) || "Outro";
+      var cor = /^#[0-9a-fA-F]{6}$/.test(item.cor || "") ? item.cor : "#2563eb";
+      var corHover = /^#[0-9a-fA-F]{6}$/.test(item.corHover || "") ? item.corHover : cor;
+      return {
+        id: id,
+        nome: nome,
+        local: textoLimpo(item.local, 80) || "Local cadastrado",
+        cidade: cidade,
+        pais: textoLimpo(item.pais, 60) || nomePais(iso),
+        paisISO: iso,
+        categoria: categoria,
+        inicial: textoLimpo(item.inicial, 2) || nome.charAt(0).toUpperCase(),
+        cor: cor,
+        corHover: corHover,
+        lat: lat,
+        lng: lng,
+        descricao: textoLimpo(item.descricao, 280),
+        tamanho: Number(item.tamanho) || 26,
+        custom: true
+      };
+    }
+
+    function carregarLocaisSalvos() {
+      try {
+        var salvo = JSON.parse(localStorage.getItem(CHAVE_LOCAIS));
+        if (salvo && typeof salvo === "object") {
+          return {
+            adicionados: Array.isArray(salvo.adicionados) ? salvo.adicionados : [],
+            removidos: Array.isArray(salvo.removidos) ? salvo.removidos : []
+          };
+        }
+      } catch (erro) {}
+      return { adicionados: [], removidos: [] };
+    }
+
+    function salvarLocaisSalvos(dados) {
+      try {
+        localStorage.setItem(CHAVE_LOCAIS, JSON.stringify({
+          adicionados: (dados.adicionados || []).slice(0, 500),
+          removidos: (dados.removidos || []).slice(0, 500)
+        }));
+      } catch (erro) {}
+    }
+
+    function ehPontoDePartida(item) {
+      return !!item && (item.pontoDePartida === true || item.id === "crateus");
+    }
+
+    (function aplicarLocaisSalvos() {
+      var dados = carregarLocaisSalvos();
+      var removidos = dados.removidos.filter(function (id) {
+        return id !== "crateus";
+      });
+      if (removidos.length !== dados.removidos.length) {
+        dados.removidos = removidos;
+        salvarLocaisSalvos(dados);
+      }
+      LOCAIS = LOCAIS.filter(function (item) {
+        return ehPontoDePartida(item) || removidos.indexOf(item.id) === -1;
+      });
+      dados.adicionados.forEach(function (item) {
+        var valido = normalizarLocalSalvo(item);
+        if (!valido) return;
+        var existe = LOCAIS.some(function (local) {
+          return local.id === valido.id;
+        });
+        if (!existe) LOCAIS.push(valido);
+      });
+    })();
 
     var locations = {};
     var labels = {};
@@ -597,7 +1057,8 @@
       ubisoft: { anchor: "start", dx: 14, dy: 0 },
       nubank: { anchor: "end", dx: -14, dy: -12 }
     };
-    LOCAIS.forEach(function (item) {
+
+    function construirLocation(item) {
       var location = {
         name: item.nome,
         lat: String(item.lat),
@@ -614,13 +1075,15 @@
       };
       if (item.pulse) {
         location.pulse_color = item.cor;
-        location.pulse_size = 1.7;
-        location.pulse_speed = 1.2;
+        location.pulse_size = ehPontoDePartida(item) ? 2.2 : 1.7;
+        location.pulse_speed = ehPontoDePartida(item) ? 1.5 : 1.2;
       }
-      locations[item.id] = location;
+      return location;
+    }
 
+    function construirLabelLocal(item) {
       var layout = labelLayout[item.id] || { anchor: "start", dx: 14, dy: 0 };
-      labels[item.id] = {
+      return {
         name: "\u00A0" + item.nome,
         parent_type: "location",
         parent_id: item.id,
@@ -632,7 +1095,57 @@
         line_color: "#94a3b8",
         line_size: 1
       };
-    });
+    }
+
+    function construirLabelPais(iso) {
+      return {
+        name: SIGLAS_PAIS[iso] || iso,
+        parent_type: "state",
+        parent_id: iso,
+        color: "#94a3b8",
+        hover_color: "#2563eb",
+        size: 12,
+        anchor: "middle",
+        display: "all",
+        line: false
+      };
+    }
+
+    function paisesComSigla() {
+      var mapa = {};
+      PAISES_DESTACADOS.forEach(function (iso) {
+        mapa[iso] = true;
+      });
+      LOCAIS.forEach(function (item) {
+        if (item.paisISO && /^[A-Z]{2}$/.test(item.paisISO)) {
+          mapa[item.paisISO] = true;
+        }
+      });
+      return Object.keys(mapa);
+    }
+
+    function reconstruirDadosDoMapa() {
+      var chave;
+      for (chave in locations) {
+        if (Object.prototype.hasOwnProperty.call(locations, chave)) delete locations[chave];
+      }
+      for (chave in labels) {
+        if (Object.prototype.hasOwnProperty.call(labels, chave)) delete labels[chave];
+      }
+      LOCAIS.forEach(function (item) {
+        locations[item.id] = construirLocation(item);
+        labels[item.id] = construirLabelLocal(item);
+      });
+      paisesComSigla().forEach(function (iso) {
+        labels["pais_" + iso] = construirLabelPais(iso);
+      });
+      if (typeof simplemaps_worldmap_mapdata !== "undefined" && simplemaps_worldmap_mapdata) {
+        simplemaps_worldmap_mapdata.locations = locations;
+        simplemaps_worldmap_mapdata.labels = labels;
+      }
+    }
+
+    reconstruirDadosDoMapa();
 
     var simplemaps_worldmap_mapdata = {
       main_settings: {
@@ -740,7 +1253,10 @@
       <section class="map-card">
         <div class="map-top">
           <strong>Pins das empresas e do ponto de partida</strong>
-          <span class="map-hint">Arraste para mover · role para aproximar</span>
+          <div class="map-actions">
+            <span class="map-hint">Arraste para mover · role para aproximar</span>
+            <button class="add-btn" type="button" id="btn-abrir-cadastro">+ Cadastrar local</button>
+          </div>
         </div>
         <div id="map"></div>
       </section>
@@ -781,27 +1297,136 @@
     </main>
   </div>
 
+  <div class="modal-overlay" id="modal-cadastro" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-cadastro-titulo">
+      <div class="modal-head">
+        <div>
+          <span class="info-cat">Novo local</span>
+          <h2 id="modal-cadastro-titulo">Cadastrar local</h2>
+        </div>
+        <button class="modal-close" type="button" id="btn-fechar-cadastro" aria-label="Fechar">×</button>
+      </div>
+
+      <form id="form-cadastro" class="modal-form" novalidate>
+        <label class="field">
+          <span>Nome do local *</span>
+          <input name="nome" type="text" maxlength="60" required autocomplete="off" placeholder="Ex.: Google">
+        </label>
+
+        <div class="field">
+          <span>País *</span>
+          <input id="busca-pais" type="search" autocomplete="off" placeholder="Digite para buscar o país..." aria-label="Buscar país" role="combobox" aria-controls="select-pais" aria-expanded="false" aria-autocomplete="list">
+          <select name="paisISO" id="select-pais" size="6" aria-label="Lista de países" hidden></select>
+        </div>
+
+        <label class="field">
+          <span>Cidade *</span>
+          <input name="cidade" type="text" maxlength="80" required autocomplete="off" placeholder="Ex.: Paris">
+        </label>
+
+        <label class="field">
+          <span>Categoria *</span>
+          <select name="categoria" required>
+            <option value="Big Tech">Big Tech</option>
+            <option value="Streaming">Streaming</option>
+            <option value="Games">Games</option>
+            <option value="Fintech">Fintech</option>
+            <option value="Partida">Partida</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Endereço / referência</span>
+          <input name="local" type="text" maxlength="80" autocomplete="off" placeholder="Ex.: Sede em Paris">
+        </label>
+
+        <label class="field">
+          <span>Descrição</span>
+          <textarea name="descricao" rows="3" maxlength="280" placeholder="Conte um pouco sobre o local"></textarea>
+        </label>
+
+        <details class="advanced">
+          <summary>Coordenadas avançadas (opcional)</summary>
+          <div class="advanced-grid">
+            <label class="field">
+              <span>Latitude</span>
+              <input name="lat" type="number" step="any" min="-90" max="90" placeholder="-23.5505">
+            </label>
+            <label class="field">
+              <span>Longitude</span>
+              <input name="lng" type="number" step="any" min="-180" max="180" placeholder="-46.6333">
+            </label>
+          </div>
+        </details>
+
+        <p class="form-status" id="form-status" role="status"></p>
+
+        <div class="modal-actions">
+          <button class="btn-ghost" type="button" id="btn-cancelar-cadastro">Cancelar</button>
+          <button class="btn-primary" type="submit" id="btn-salvar-cadastro">Cadastrar local</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmar" hidden>
+    <div class="modal modal-small" role="alertdialog" aria-modal="true" aria-labelledby="modal-confirmar-titulo">
+      <div class="modal-head">
+        <h2 id="modal-confirmar-titulo">Excluir local</h2>
+      </div>
+      <p class="confirm-text">Tem certeza que deseja excluir <strong id="confirmar-nome"></strong>? Os votos desse local também serão removidos.</p>
+      <div class="modal-actions">
+        <button class="btn-ghost" type="button" id="btn-cancelar-exclusao">Cancelar</button>
+        <button class="btn-danger" type="button" id="btn-confirmar-exclusao">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
     (function () {
       var CHAVE = "mapa-empresas-votos-v1";
       var estado = carregarEstado();
 
       function carregarEstado() {
+        var votos = {};
         try {
           var salvo = JSON.parse(localStorage.getItem(CHAVE));
-          if (salvo && typeof salvo === "object") {
-            return {
-              votos: salvo.votos || {}
-            };
+          if (salvo && typeof salvo === "object" && salvo.votos) {
+            votos = salvo.votos;
           }
         } catch (erro) {}
-        return { votos: {} };
+        var limpos = {};
+        for (var id in votos) {
+          if (Object.prototype.hasOwnProperty.call(votos, id) && localPorId(id)) {
+            limpos[id] = Number(votos[id]) || 0;
+          }
+        }
+        return { votos: limpos };
       }
 
       function salvarEstado() {
         try {
           localStorage.setItem(CHAVE, JSON.stringify(estado));
         } catch (erro) {}
+      }
+
+      function escaparHTML(valor) {
+        return String(valor == null ? "" : valor).replace(/[&<>"']/g, function (caractere) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+          }[caractere];
+        });
+      }
+
+      function corSegura(cor) {
+        return /^#[0-9a-fA-F]{6}$/.test(cor || "") ? cor : "#2563eb";
       }
 
       function localPorId(id) {
@@ -840,15 +1465,20 @@
             votos: Number(estado.votos[local.id]) || 0
           };
         }).sort(function (a, b) {
+          var inicioA = ehPontoDePartida(a.local) ? 0 : 1;
+          var inicioB = ehPontoDePartida(b.local) ? 0 : 1;
+          if (inicioA !== inicioB) return inicioA - inicioB;
           if (b.votos !== a.votos) return b.votos - a.votos;
           return a.indice - b.indice;
         });
         ranking.forEach(function (item) {
           var local = item.local;
           var quantidade = item.votos;
-          html += '<button class="local-item" type="button" data-id="' + local.id + '">' +
-            '<span class="local-dot" style="background:' + local.cor + '"></span>' +
-            '<span class="local-text"><strong>' + local.nome + '</strong><small>' + local.cidade + ' · ' + local.pais + '</small></span>' +
+          var inicio = ehPontoDePartida(local);
+          html += '<button class="local-item' + (inicio ? ' start' : '') + '" type="button" data-id="' + escaparHTML(local.id) + '">' +
+            '<span class="local-dot" style="background:' + corSegura(local.cor) + '"></span>' +
+            '<span class="local-text"><strong>' + escaparHTML(local.nome) + '</strong><small>' + escaparHTML(local.cidade) + ' · ' + escaparHTML(local.pais) + '</small></span>' +
+            (inicio ? '<span class="local-badge">Partida</span>' : '') +
             '<span class="local-votes">' + quantidade + '</span>' +
             '</button>';
         });
@@ -867,25 +1497,31 @@
       function renderizarInfo(local) {
         var painel = document.getElementById("local-info");
         var quantidade = Number(estado.votos[local.id]) || 0;
-        var corTexto = "#ffffff";
+        var inicio = ehPontoDePartida(local);
+
+        painel.classList.toggle("is-start", inicio);
 
         painel.innerHTML =
           '<div class="info-head">' +
-            '<span class="logo-badge" style="background:' + local.cor + ';color:' + corTexto + '">' + local.inicial + '</span>' +
+            '<span class="logo-badge" style="background:' + corSegura(local.cor) + ';color:#ffffff">' + escaparHTML(local.inicial) + '</span>' +
             '<div>' +
-              '<span class="info-cat">' + local.categoria + '</span>' +
-              '<h2>' + local.nome + '</h2>' +
-              '<p>' + local.cidade + ' · ' + local.pais + '</p>' +
+              '<span class="info-cat">' + escaparHTML(local.categoria) + '</span>' +
+              '<h2>' + escaparHTML(local.nome) + '</h2>' +
+              '<p>' + escaparHTML(local.cidade) + ' · ' + escaparHTML(local.pais) + '</p>' +
             '</div>' +
           '</div>' +
-          '<p class="info-desc">' + local.descricao + '</p>' +
+          '<p class="info-desc">' + escaparHTML(local.descricao) + '</p>' +
           '<div class="info-meta">' +
-            '<span>' + local.local + '</span>' +
-            '<span>' + local.categoria + '</span>' +
+            (inicio ? '' : '<span>' + escaparHTML(local.local) + '</span>') +
+            '<span>' + escaparHTML(local.categoria) + '</span>' +
+            (inicio ? '<span class="start-chip">Ponto de partida</span>' : '') +
           '</div>' +
-          '<button class="vote-btn" type="button" id="btn-votar">' +
-            'Votar (+1)' +
-          '</button>' +
+          '<div class="info-actions">' +
+            '<button class="vote-btn" type="button" id="btn-votar">Votar (+1)</button>' +
+            (inicio
+              ? '<p class="lock-note">Ponto de partida da rota. Este local não pode ser excluído.</p>'
+              : '<button class="delete-btn" type="button" id="btn-excluir-local">Excluir local</button>') +
+          '</div>' +
           '<p class="vote-count"><strong>' + formatarNumero(quantidade) + '</strong> ' + (quantidade === 1 ? "voto" : "votos") + '</p>';
 
         var botao = document.getElementById("btn-votar");
@@ -894,6 +1530,23 @@
             votar(local.id);
           });
         }
+
+        var botaoExcluir = document.getElementById("btn-excluir-local");
+        if (botaoExcluir) {
+          botaoExcluir.addEventListener("click", function () {
+            abrirConfirmacao(local);
+          });
+        }
+      }
+
+      function renderizarVazio() {
+        document.getElementById("local-info").classList.remove("is-start");
+        document.getElementById("local-info").innerHTML =
+          '<div class="info-empty">' +
+            '<div class="pin-illustration" aria-hidden="true"></div>' +
+            '<h2>Explore os locais</h2>' +
+            '<p>Passe o mouse sobre um pino para ver as informações. Clique para selecionar o local e usar o botão de votar.</p>' +
+          '</div>';
       }
 
       function selecionar(id, aproximar) {
@@ -924,12 +1577,492 @@
       });
 
       document.getElementById("btn-reset-votos").addEventListener("click", function () {
-        localStorage.clear();
+        localStorage.removeItem(CHAVE);
         estado = { votos: {} };
         atualizarEstatisticas();
         atualizarLista();
         var local = localPorId(window.localSelecionado);
         if (local) renderizarInfo(local);
+      });
+
+      var CORES_CATEGORIA = {
+        "Big Tech": { cor: "#0866ff", corHover: "#0654d4" },
+        "Streaming": { cor: "#1db954", corHover: "#169c46" },
+        "Games": { cor: "#1b1b1b", corHover: "#3a3a3a" },
+        "Fintech": { cor: "#820ad1", corHover: "#6b08ae" },
+        "Partida": { cor: "#0ea5e9", corHover: "#0284c7" },
+        "Outro": { cor: "#2563eb", corHover: "#1d4ed8" }
+      };
+
+      var PAISES_ORDENADOS = [];
+      var PAISES_POR_ISO = {};
+      var localParaExcluir = null;
+      var ultimoFoco = null;
+      var cacheGeocodificacao = {};
+      var toastTimer = null;
+
+      function normalizarBusca(texto) {
+        try {
+          return String(texto || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        } catch (erro) {
+          return String(texto || "").toLowerCase();
+        }
+      }
+
+      function abrirOverlay(id) {
+        ultimoFoco = document.activeElement;
+        document.getElementById(id).hidden = false;
+        document.body.classList.add("modal-open");
+      }
+
+      function fecharOverlay(id) {
+        document.getElementById(id).hidden = true;
+        if (document.getElementById("modal-cadastro").hidden && document.getElementById("modal-confirmar").hidden) {
+          document.body.classList.remove("modal-open");
+        }
+        if (ultimoFoco && typeof ultimoFoco.focus === "function") {
+          try { ultimoFoco.focus(); } catch (erro) {}
+        }
+        ultimoFoco = null;
+      }
+
+      function mostrarStatus(mensagem, erro) {
+        var status = document.getElementById("form-status");
+        status.textContent = mensagem || "";
+        status.classList.toggle("error", !!erro);
+      }
+
+      function mostrarAviso(mensagem) {
+        var toast = document.getElementById("toast");
+        toast.textContent = mensagem;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toast.classList.remove("show");
+        }, 3600);
+      }
+
+      function montarListaPaises() {
+        PAISES_ORDENADOS = Object.keys(SIGLAS_PAIS).map(function (iso) {
+          return { iso: iso, nome: nomePais(iso), sigla: SIGLAS_PAIS[iso] };
+        }).sort(function (a, b) {
+          return a.nome.localeCompare(b.nome, "pt-BR");
+        });
+        PAISES_POR_ISO = {};
+        PAISES_ORDENADOS.forEach(function (pais) {
+          PAISES_POR_ISO[pais.iso] = pais;
+        });
+      }
+
+      function definirListaPaisesVisivel(visivel) {
+        var select = document.getElementById("select-pais");
+        var busca = document.getElementById("busca-pais");
+        select.hidden = !visivel;
+        busca.setAttribute("aria-expanded", visivel ? "true" : "false");
+      }
+
+      function renderizarOpcoesPais(filtro) {
+        var select = document.getElementById("select-pais");
+        var atual = select.value;
+        var busca = normalizarBusca(filtro);
+        var html = "";
+        var primeiro = null;
+
+        PAISES_ORDENADOS.forEach(function (pais) {
+          var alvo = normalizarBusca(pais.nome + " " + pais.sigla + " " + pais.iso);
+          if (busca && alvo.indexOf(busca) === -1) return;
+          if (!primeiro) primeiro = pais.iso;
+          html += '<option value="' + pais.iso + '">' + escaparHTML(pais.nome) + ' (' + escaparHTML(pais.sigla) + ')</option>';
+        });
+
+        if (!html) {
+          html = '<option value="" disabled selected>Nenhum país encontrado</option>';
+        }
+
+        select.innerHTML = html;
+
+        if (!busca) {
+          select.value = "";
+        } else if (atual && select.querySelector('option[value="' + atual + '"]')) {
+          select.value = atual;
+        } else if (primeiro) {
+          select.value = primeiro;
+        }
+
+        definirListaPaisesVisivel(busca.length > 0);
+      }
+
+      function aplicarPaisSelecionado() {
+        var select = document.getElementById("select-pais");
+        var busca = document.getElementById("busca-pais");
+        var pais = PAISES_POR_ISO[select.value];
+        if (!pais) return;
+        busca.value = pais.nome;
+        definirListaPaisesVisivel(false);
+        busca.focus();
+      }
+
+      function abrirCadastro() {
+        var form = document.getElementById("form-cadastro");
+        form.reset();
+        document.getElementById("busca-pais").value = "";
+        renderizarOpcoesPais("");
+        var select = document.getElementById("select-pais");
+        var padrao = PAISES_POR_ISO["BR"];
+        if (padrao) {
+          select.value = "BR";
+          document.getElementById("busca-pais").value = padrao.nome;
+        }
+        definirListaPaisesVisivel(false);
+        mostrarStatus("", false);
+        abrirOverlay("modal-cadastro");
+        setTimeout(function () {
+          form.elements.nome.focus();
+        }, 30);
+      }
+
+      function fecharCadastro() {
+        fecharOverlay("modal-cadastro");
+      }
+
+      function abrirConfirmacao(local) {
+        if (ehPontoDePartida(local)) {
+          mostrarAviso("O ponto de partida não pode ser excluído.");
+          return;
+        }
+        localParaExcluir = local;
+        document.getElementById("confirmar-nome").textContent = local.nome;
+        abrirOverlay("modal-confirmar");
+        document.getElementById("btn-cancelar-exclusao").focus();
+      }
+
+      function fecharConfirmacao() {
+        localParaExcluir = null;
+        fecharOverlay("modal-confirmar");
+      }
+
+      function gerarId(nome) {
+        var base = normalizarBusca(nome).replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+        if (!base) base = "local";
+        return base.slice(0, 40) + "-" + Date.now().toString(36);
+      }
+
+      function geocodificar(cidade, iso) {
+        var chave = iso + "|" + normalizarBusca(cidade);
+        if (cacheGeocodificacao[chave]) {
+          return Promise.resolve(cacheGeocodificacao[chave]);
+        }
+        if (typeof fetch !== "function" || typeof AbortController === "undefined") {
+          return Promise.resolve(null);
+        }
+
+        var url = "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&accept-language=pt-BR&countrycodes=" +
+          encodeURIComponent(iso.toLowerCase()) + "&q=" + encodeURIComponent(cidade + ", " + nomePais(iso));
+        var controller = new AbortController();
+        var timer = setTimeout(function () {
+          controller.abort();
+        }, 8000);
+
+        return fetch(url, { signal: controller.signal, headers: { "Accept": "application/json" } })
+          .then(function (resposta) {
+            if (!resposta.ok) throw new Error("geocode");
+            return resposta.json();
+          })
+          .then(function (lista) {
+            if (!lista || !lista.length) return null;
+            var lat = Number(lista[0].lat);
+            var lng = Number(lista[0].lon);
+            if (!isFinite(lat) || !isFinite(lng)) return null;
+            var coords = { lat: lat, lng: lng };
+            cacheGeocodificacao[chave] = coords;
+            return coords;
+          })
+          .catch(function () {
+            return null;
+          })
+          .then(function (resultado) {
+            clearTimeout(timer);
+            return resultado;
+          });
+      }
+
+      function centroPais(iso) {
+        if (!window.simplemaps_worldmap || !simplemaps_worldmap.states) return null;
+        var estadoPais = simplemaps_worldmap.states[iso];
+        if (!estadoPais || !estadoPais.sm || !estadoPais.sm.bbox) return null;
+        var bbox = estadoPais.sm.bbox;
+        if (bbox.x == null || bbox.x2 == null || bbox.y == null || bbox.y2 == null) return null;
+        var ponto = simplemaps_worldmap.inverse_proj((bbox.x + bbox.x2) / 2, (bbox.y + bbox.y2) / 2);
+        if (!ponto || !isFinite(ponto.lat) || !isFinite(ponto.lng)) return null;
+        return { lat: ponto.lat, lng: ponto.lng };
+      }
+
+      function deslocarCoordenadas(coords, iso) {
+        var total = 0;
+        LOCAIS.forEach(function (item) {
+          if (item.paisISO === iso) total++;
+        });
+        if (!total) return coords;
+        var angulo = total * 2.399963229728653;
+        var raio = 0.3 * Math.sqrt(total);
+        var lat = coords.lat + raio * Math.sin(angulo);
+        var fator = Math.max(0.25, Math.cos(coords.lat * Math.PI / 180));
+        var lng = coords.lng + (raio * Math.cos(angulo)) / fator;
+        lat = Math.max(-90, Math.min(90, lat));
+        if (lng > 180) lng -= 360;
+        if (lng < -180) lng += 360;
+        return { lat: lat, lng: lng };
+      }
+
+      function recarregarMapa() {
+        reconstruirDadosDoMapa();
+        if (window.simplemaps_worldmap && simplemaps_worldmap.loaded) {
+          simplemaps_worldmap.refresh();
+          setTimeout(posicionarLegendas, 0);
+        }
+      }
+
+      function excluirLocal(id) {
+        var local = localPorId(id);
+        if (!local) return;
+        if (ehPontoDePartida(local)) {
+          mostrarAviso("O ponto de partida não pode ser excluído.");
+          return;
+        }
+        var indice = -1;
+        for (var i = 0; i < LOCAIS.length; i++) {
+          if (LOCAIS[i].id === id) {
+            indice = i;
+            break;
+          }
+        }
+        if (indice === -1) return;
+
+        LOCAIS.splice(indice, 1);
+        delete estado.votos[id];
+        salvarEstado();
+
+        var dados = carregarLocaisSalvos();
+        if (local.custom) {
+          dados.adicionados = dados.adicionados.filter(function (item) {
+            return !(item && item.id === id);
+          });
+        } else if (dados.removidos.indexOf(id) === -1) {
+          dados.removidos.push(id);
+        }
+        salvarLocaisSalvos(dados);
+
+        var eraSelecionado = window.localSelecionado === id;
+        if (eraSelecionado) {
+          window.localSelecionado = null;
+          renderizarVazio();
+        }
+
+        recarregarMapa();
+        atualizarEstatisticas();
+        atualizarLista();
+
+        if (!eraSelecionado) {
+          var selecionado = localPorId(window.localSelecionado);
+          if (selecionado) renderizarInfo(selecionado);
+        }
+
+        mostrarAviso(local.nome + " foi excluído.");
+      }
+
+      function aoEnviarCadastro(evento) {
+        evento.preventDefault();
+        var form = document.getElementById("form-cadastro");
+        var nome = textoLimpo(form.elements.nome.value, 60);
+        var iso = textoLimpo(form.elements.paisISO.value, 2).toUpperCase();
+        var cidade = textoLimpo(form.elements.cidade.value, 80);
+        var categoria = textoLimpo(form.elements.categoria.value, 40) || "Outro";
+        var referencia = textoLimpo(form.elements.local.value, 80);
+        var descricao = textoLimpo(form.elements.descricao.value, 280);
+        var latTexto = String(form.elements.lat.value || "").trim();
+        var lngTexto = String(form.elements.lng.value || "").trim();
+
+        if (!nome) {
+          mostrarStatus("Informe o nome do local.", true);
+          form.elements.nome.focus();
+          return;
+        }
+        if (!iso || !SIGLAS_PAIS[iso]) {
+          mostrarStatus("Selecione um país na lista.", true);
+          document.getElementById("busca-pais").focus();
+          return;
+        }
+        if (!cidade) {
+          mostrarStatus("Informe a cidade.", true);
+          form.elements.cidade.focus();
+          return;
+        }
+        if ((latTexto && !lngTexto) || (!latTexto && lngTexto)) {
+          mostrarStatus("Preencha latitude e longitude juntas ou deixe ambas vazias.", true);
+          return;
+        }
+
+        var lat = latTexto ? Number(latTexto) : null;
+        var lng = lngTexto ? Number(lngTexto) : null;
+        if (lat !== null && (!isFinite(lat) || lat < -90 || lat > 90)) {
+          mostrarStatus("Latitude deve estar entre -90 e 90.", true);
+          return;
+        }
+        if (lng !== null && (!isFinite(lng) || lng < -180 || lng > 180)) {
+          mostrarStatus("Longitude deve estar entre -180 e 180.", true);
+          return;
+        }
+
+        if (!window.simplemaps_worldmap || !simplemaps_worldmap.loaded) {
+          mostrarStatus("Aguarde o mapa carregar e tente novamente.", true);
+          return;
+        }
+
+        var botao = document.getElementById("btn-salvar-cadastro");
+        botao.disabled = true;
+        mostrarStatus("Localizando cidade...", false);
+
+        var promessa = (lat !== null && lng !== null)
+          ? Promise.resolve({ lat: lat, lng: lng })
+          : geocodificar(cidade, iso);
+
+        promessa.then(function (coords) {
+          var usouCentro = false;
+          if (!coords) {
+            coords = centroPais(iso);
+            usouCentro = true;
+          }
+          if (!coords) {
+            botao.disabled = false;
+            mostrarStatus("Não foi possível localizar a cidade. Informe latitude e longitude.", true);
+            return;
+          }
+          if (usouCentro) coords = deslocarCoordenadas(coords, iso);
+
+          var cores = CORES_CATEGORIA[categoria] || CORES_CATEGORIA["Outro"];
+          var novo = {
+            id: gerarId(nome),
+            nome: nome,
+            local: referencia || "Local cadastrado",
+            cidade: cidade,
+            pais: nomePais(iso),
+            paisISO: iso,
+            categoria: categoria,
+            inicial: nome.charAt(0).toUpperCase(),
+            cor: cores.cor,
+            corHover: cores.corHover,
+            lat: Math.round(coords.lat * 1000000) / 1000000,
+            lng: Math.round(coords.lng * 1000000) / 1000000,
+            descricao: descricao || ("Local cadastrado em " + cidade + "."),
+            custom: true
+          };
+
+          var dados = carregarLocaisSalvos();
+          dados.adicionados = dados.adicionados.filter(function (item) {
+            return !(item && item.id === novo.id);
+          });
+          dados.adicionados.push(novo);
+          dados.removidos = dados.removidos.filter(function (id) {
+            return id !== novo.id;
+          });
+          salvarLocaisSalvos(dados);
+
+          LOCAIS.push(novo);
+          recarregarMapa();
+          atualizarEstatisticas();
+          atualizarLista();
+          fecharCadastro();
+          botao.disabled = false;
+          selecionar(novo.id, false);
+          setTimeout(function () {
+            if (window.simplemaps_worldmap && simplemaps_worldmap.loaded) {
+              simplemaps_worldmap.location_zoom(novo.id, 4);
+            }
+          }, 120);
+
+          if (usouCentro) {
+            mostrarAviso("Cidade não encontrada. Pino posicionado no centro do país.");
+          } else {
+            mostrarAviso(novo.nome + " cadastrado em " + novo.pais + ".");
+          }
+        }).catch(function () {
+          botao.disabled = false;
+          mostrarStatus("Não foi possível cadastrar o local. Tente novamente.", true);
+        });
+      }
+
+      document.getElementById("btn-abrir-cadastro").addEventListener("click", abrirCadastro);
+      document.getElementById("btn-fechar-cadastro").addEventListener("click", fecharCadastro);
+      document.getElementById("btn-cancelar-cadastro").addEventListener("click", fecharCadastro);
+      (function configurarSeletorPais() {
+        var busca = document.getElementById("busca-pais");
+        var select = document.getElementById("select-pais");
+
+        busca.addEventListener("focus", function () {
+          var pais = PAISES_POR_ISO[select.value];
+          if (pais && this.value === pais.nome) this.select();
+        });
+
+        busca.addEventListener("input", function () {
+          var pais = PAISES_POR_ISO[select.value];
+          if (pais && this.value !== pais.nome) select.value = "";
+          renderizarOpcoesPais(this.value);
+        });
+
+        busca.addEventListener("keydown", function (evento) {
+          if (evento.key === "ArrowDown" && !select.hidden) {
+            evento.preventDefault();
+            select.focus();
+            if (select.selectedIndex < 0) select.selectedIndex = 0;
+            return;
+          }
+          if (evento.key === "Enter" && !select.hidden) {
+            evento.preventDefault();
+            aplicarPaisSelecionado();
+          }
+        });
+
+        select.addEventListener("change", function () {
+          var pais = PAISES_POR_ISO[this.value];
+          if (pais) busca.value = pais.nome;
+        });
+
+        select.addEventListener("click", function () {
+          aplicarPaisSelecionado();
+        });
+
+        select.addEventListener("keydown", function (evento) {
+          if (evento.key === "Enter") {
+            evento.preventDefault();
+            aplicarPaisSelecionado();
+          } else if (evento.key === "Escape") {
+            evento.preventDefault();
+            definirListaPaisesVisivel(false);
+            busca.focus();
+          }
+        });
+      })();
+      document.getElementById("form-cadastro").addEventListener("submit", aoEnviarCadastro);
+      document.getElementById("btn-cancelar-exclusao").addEventListener("click", fecharConfirmacao);
+      document.getElementById("btn-confirmar-exclusao").addEventListener("click", function () {
+        if (!localParaExcluir) return;
+        var id = localParaExcluir.id;
+        fecharConfirmacao();
+        excluirLocal(id);
+      });
+      document.getElementById("modal-cadastro").addEventListener("click", function (evento) {
+        if (evento.target === this) fecharCadastro();
+      });
+      document.getElementById("modal-confirmar").addEventListener("click", function (evento) {
+        if (evento.target === this) fecharConfirmacao();
+      });
+      document.addEventListener("keydown", function (evento) {
+        if (evento.key !== "Escape") return;
+        if (!document.getElementById("modal-confirmar").hidden) {
+          fecharConfirmacao();
+        } else if (!document.getElementById("modal-cadastro").hidden) {
+          fecharCadastro();
+        }
       });
 
       window.simplemaps_worldmap.hooks.over_location = function (id) {
@@ -954,6 +2087,7 @@
         simplemaps_worldmap.refresh();
       }
 
+      montarListaPaises();
       atualizarEstatisticas();
       atualizarLista();
       simplemaps_worldmap.load();
