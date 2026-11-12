@@ -128,7 +128,7 @@
           '<div class="info-actions">' +
             '<button class="vote-btn" type="button" id="btn-votar">Votar (+1)</button>' +
             (inicio
-              ? '<p class="lock-note">Ponto de partida da rota. Este local não pode ser excluído.</p>'
+              ? ''
               : '<button class="delete-btn" type="button" id="btn-excluir-local">Excluir local</button>') +
           '</div>' +
           '<p class="vote-count"><strong>' + formatarNumero(quantidade) + '</strong> ' + (quantidade === 1 ? "voto" : "votos") + '</p>';
